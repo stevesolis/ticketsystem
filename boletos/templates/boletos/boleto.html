@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boleto generado</title>
+</head>
+<body>
+    <h2>Boleto generado correctamente</h2>
+
+    <p><strong>Código del boleto:</strong> {{ codigo }}</p>
+
+    <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code">
+
+</body>
+</html>
