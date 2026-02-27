@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-from boletos.views import home, admin_redirect
+from django.urls import path, include
 
-
-urlpatterns = [
-    path('', home, name='home'),
+urlpatterns = [ //Holi
     path('admin/', admin.site.urls),
+    path('', include('boletos.urls')),
 ]
