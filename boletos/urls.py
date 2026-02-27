@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from .views import validar_boleto
 
 urlpatterns = [
-    path("ver/<uuid:codigo>/", views.ver_boleto, name="ver_boleto"),
-    path("validar/<uuid:codigo>/", views.confirmar_validacion, name="confirmar_validacion"),
+    path('validar/<uuid:codigo>/', validar_boleto, name='validar_boleto'),
 ]
