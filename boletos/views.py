@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Boleto
-@login_required
 
+@login_required
 def validar_boleto(request, codigo):
     try:
         # 1. Buscamos el boleto. IMPORTANTE: El campo debe llamarse 'codigo' en tu modelo
