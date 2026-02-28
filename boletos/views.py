@@ -46,3 +46,6 @@ def estadisticas(request):
     'faltantes': faltantes,
     'porcentaje': (ingresados / total) * 100 if total > 0 else 0
     })
+
+def inicio(request):
+    return render(request, 'boletos/inicio.html')
