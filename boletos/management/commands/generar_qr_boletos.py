@@ -14,7 +14,7 @@ class Command(BaseCommand):
         # 2. Copia la URL que dice "Forwarding" (ejemplo: https://1a2b-3c4d.ngrok-free.app)
         # 3. Pégala aquí abajo asegurándote de que termine en /validar/
         
-        BASE_URL = "https://unsatirical-chrestomathic-andy.ngrok-free." 
+        BASE_URL = "https://ticketsystem-e3ww.onrender.com/validar/"
 
         base_path = "assets/base_boleto.png"
         output_root = "boletos_generados"
