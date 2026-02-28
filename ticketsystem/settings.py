@@ -6,22 +6,26 @@ from pathlib import Path
 import os
 import dj_database_url
 
+# Directorio base del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # ==============================
-# SEGURIDADholil
+# SEGURIDAD
 # ==============================
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "clave-insegura-solo-desarrollo")
+# En producción (Render), usa una variable de entorno. Localmente usa la clave por defecto.
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-clave-de-desarrollo-123")
 
-DEBUG = False
+# DEBUG debe ser True solo durante pruebas. En producción real, cámbialo a False.
+DEBUG = True 
 
-ALLOWED_HOSTS = ['*']  # Puedes restringir luego
+# Permitir todos los hosts para evitar errores de conexión con Ngrok y Render
+ALLOWED_HOSTS = ['*']
 
 
 # ==============================
-# APLICACIONES
+# APLICACIONES (INSTALLED_APPS)
 # ==============================
 
 INSTALLED_APPS = [
@@ -32,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Tu aplicación de boletos
     'boletos',
 ]
 
@@ -42,7 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- agregado
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Para servir archivos estáticos en Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,88 +67,10 @@ ROOT_URLCONF = 'ticketsystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # Opcional: si tienes templates globales
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-
-WSGI_APPLICATION = 'ticketsystem.wsgi.application'
-
-
-# ==============================
-# BASE DE DATOS (Render PostgreSQL)
-# ==============================
-
-if os.environ.get("DATABASE_URL"):
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get("DATABASE_URL")
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-
-
-# ==============================
-# VALIDADORES DE CONTRASEÑA
-# ==============================
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# ==============================
-# INTERNACIONALIZACIÓN
-# ==============================
-
-LANGUAGE_CODE = 'es-ec'
-
-TIME_ZONE = 'America/Guayaquil'
-
-USE_I18N = True
-USE_TZ = True
-
-
-# ==============================
-# ARCHIVOS ESTÁTICOS
-# ==============================
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# WhiteNoise optimización
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# ==============================
-# CONFIGURACIÓN ADICIONAL SEGURIDAD
-# ==============================
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
-]
+                'django.contrib
